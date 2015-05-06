@@ -13,7 +13,7 @@ angular.module('myApp.controllers', [])
     $scope.parties = $firebase(partiesRef);
     // Object to store data from the waitlist form
     $scope.newParty = {name: '', phone: '', size: ''};
-    // functino to save a new party to waitlist
+    // function to save a new party to waitlist
     $scope.saveParty = function(){
       $scope.parties.$add($scope.newParty);
       $scope.newParty = {name: '', phone: '', size: ''};
@@ -21,7 +21,7 @@ angular.module('myApp.controllers', [])
 
     //send text message to party
     $scope.sendTextMessage = function(phoneNumber){
-      var textMessageRef = new Firebase('http://waitandeat-andydev.firebaseio.com/textMessages');
+      var textMessageRef = new Firebase('https://waitandeat-andydev.firebaseio.com/textMessages');
       var textMessages = $firebase(textMessageRef);
       textMessages.$add({phoneNumber:phoneNumber});
     };
