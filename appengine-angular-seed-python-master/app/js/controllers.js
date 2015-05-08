@@ -32,7 +32,7 @@ angular.module('myApp.controllers', [])
       $scope.parties.$save(party.$id);
     };
   }])
-  .controller('AuthController', ['$scope', '$firebaseSimpleLogin', function($scope, $firebaseSimpleLogin) {
+  .controller('AuthController', ['$scope', '$firebaseSimpleLogin', '$location', function($scope, $firebaseSimpleLogin, $location) {
     var authRef = new Firebase('http://waitandeat-andydev.firebaseio.com/');
 
     var auth = $firebaseSimpleLogin(authRef);
@@ -42,9 +42,22 @@ angular.module('myApp.controllers', [])
     $scope.register = function(){
       auth.$createUser($scope.user.email, $scope.user.password).then(function(data){
         console.log(data);
+        // auth.$login('password', $scope.user);
+        $scope.login();
       });
     };
 
+    $scope.login = function(){
+      auth.$login('password', $scope.user).then(function(data){
+        console.log(data);
+        $location.path('/waitlist')
+      });
+    };
+
+    $scope.logout = function(){
+      auth.$logout();
+      $location.path('/');
+    };
   }]);
 
 
