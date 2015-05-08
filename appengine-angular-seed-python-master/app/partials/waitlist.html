@@ -25,7 +25,7 @@
     </tr>
   </thead>
   <tr ng-repeat= "party in parties | orderByPriority">
-    <td> <input type="checkbox"></td>
+    <td> <input type="checkbox" ng-model="party.done" ng-change="parties.$save(party.$id)"></td>
     <td>
       <div><strong>{{party.name}} ({{party.size}} people)</strong></div>
       <div>{{party.phone}}</div>
@@ -39,8 +39,9 @@
       </div>
     </td>
     <td>
-      <button ng-click="sendTextMessage(party.phone)"type= "sumbmit" class="btn btn-success" >Send SMS</button>
+      <button ng-click="sendTextMessage(party)"type= "sumbmit" class="btn btn-success" >Send SMS</button>
       <button ng-click="parties.$remove(party.$id)" type= "sumbmit" class="btn btn-danger">Remove</button>
     </td>
   </tr>
 </table>
+

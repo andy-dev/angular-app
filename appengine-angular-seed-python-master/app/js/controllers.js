@@ -12,20 +12,25 @@ angular.module('myApp.controllers', [])
 
     $scope.parties = $firebase(partiesRef);
     // Object to store data from the waitlist form
-    $scope.newParty = {name: '', phone: '', size: ''};
+    $scope.newParty = {name: '', phone: '', size: '', done: false};
     // function to save a new party to waitlist
     $scope.saveParty = function(){
       $scope.parties.$add($scope.newParty);
-      $scope.newParty = {name: '', phone: '', size: ''};
+      $scope.newParty = {name: '', phone: '', size: '', done: false};
     };
 
     //send text message to party
-    $scope.sendTextMessage = function(phoneNumber){
-      var textMessageRef = new Firebase('https://waitandeat-andydev.firebaseio.com/textMessages');
+    $scope.sendTextMessage = function(party){
+      var textMessageRef = new Firebase('http://waitandeat-andydev.firebaseio.com/textMessages');
       var textMessages = $firebase(textMessageRef);
-      textMessages.$add({phoneNumber:phoneNumber});
+      var newTextMessage = {
+        phoneNumber: party.phone,
+        size: party.size,
+        name: party.name
+      };
+      textMessages.$add(newTextMessage);
     };
-  }])
+  }]);
 
 
 // instead of being an array will conect it to our firebase service
