@@ -32,31 +32,23 @@ angular.module('myApp.controllers', [])
       $scope.parties.$save(party.$id);
     };
   }])
-  .controller('AuthController', ['$scope', '$firebaseSimpleLogin', '$location', 'FIREBASE_URL', 'authService',function($scope, $firebaseSimpleLogin, $location, FIREBASE_URL, authService) {
-    var authRef = new Firebase(FIREBASE_URL);
+  .controller('AuthController', ['$scope', 'authService',function($scope, authService) {
 
-    var auth = $firebaseSimpleLogin(authRef);
-
+    //object bound to input in login and register pages
     $scope.user = {email: '', password: ''};
 
+    //method to register a new user using the authService
     $scope.register = function(){
-      auth.$createUser($scope.user.email, $scope.user.password).then(function(data){
-        console.log(data);
-        // auth.$login('password', $scope.user);
-        $scope.login();
-      });
+      authService.register($scope.user);
     };
 
+    //method to log in a user ustin the authService
     $scope.login = function(){
-      auth.$login('password', $scope.user).then(function(data){
-        console.log(data);
-        $location.path('/waitlist')
-      });
+     authService.login($scope.user)
     };
 
     $scope.logout = function(){
-      auth.$logout();
-      $location.path('/');
+      authService.logout()
     };
   }]);
 
@@ -72,3 +64,7 @@ angular.module('myApp.controllers', [])
 // now we have something diff we have a key and all of this {"-JoVgC_7T0NnIemxEIm8":{"name":"andy","phone":"3462345","size":"4
 // if we go to our firebase dashboard, we can see we have two items,
 // if we delete all of our data, it goes away in our app too
+
+// you could do $scope.authService = authService
+// and then you would have ng-click = authService.logout() and have a very simple app
+// but its better for sperate methods in the view
