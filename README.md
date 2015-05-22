@@ -1,5 +1,5 @@
 # angular-app
-Web app using AngularJS
+Web App using AngularJS
 
 Web app based on Gordon Zhu AngularJS tutorial. 
 
